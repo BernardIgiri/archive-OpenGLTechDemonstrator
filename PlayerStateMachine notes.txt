@@ -1,0 +1,16 @@
+class CPlayerStateMachine
+{
+public:
+	CPlayerStateMachine(CLog *pLog);
+	~CPlayerStateMachine();
+	bool Initialize();
+	void Shutdown();
+	bool LoadPlayerData(char *filename);
+	bool SavePlayerData();
+	// COMMAND LIST
+	void ActionMovePlayer(float direction,bool run); // Used by the input system and FMV system
+	void GetMotionState(plyrVolatileState_t &volState); // Used by Renderer
+protected:
+	plyrVolatileState_t playerState;
+	CLog				*m_pLog;
+};

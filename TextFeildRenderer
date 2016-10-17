@@ -1,0 +1,135 @@
+#ifndef __TEXTFEILDRENDER_INCLUDED__
+#include "log.h"
+#include "TextInputSystem.h"
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winuser.h>
+#include <gl/gl.h>
+#include <gl/glu.h>
+#include <gl/glaux.h>
+#include "fonts.h"
+
+class CTextFeildRenderer
+{
+public:
+	CTextFeildRenderer(int fontListBase, int dislpayWidth, int maxChars,
+		int textHeight, int textWidth, int top, int left, int padding, CLog **cLog);
+	~CTextFeildRenderer();
+	const char *UpdateAndRender(const char nextCharacter);
+	void MoveTo(int x, int y);
+protected:
+	int m_fontListBase,
+		m_displayWidth,
+		m_maxChars,
+		m_textHeight,
+		m_textWidth,
+		m_top,
+		m_left,
+		m_padding;
+	int   m_backGroundColor[3],
+		  m_textColor[3],
+		  m_minX,m_maxX,
+		  m_minY,m_maxY;
+	const char *m_pReadText,
+			   *m_pDisplayText,
+			   *m_pNoCursor;
+	char	   *m_pReturnedOutput;
+	CTextInputSystem *m_cTextInput;
+	CLog			 *m_cLog;
+};
+
+CTextFeildRenderer::CTextFeildRenderer(int fontListBase, int displayWidth, int maxChars,
+									   int textHeight, int textWidth, int top, int left,
+									   int padding, CLog *cLog)
+{
+	try
+	{
+		m_cLog=(*cLog);
+		m_backGroundColor[0]=1.0f;
+		m_backGroundColor[1]=1.0f;
+		m_backGroundColor[2]=1.0f;
+		m_textColor[0]=0.0f;
+		m_textColor[1]=0.0f;
+		m_textColor[2]=0.0f;
+		m_fontListBase = fontListBase;
+		m_displayWidth = displayWidth;
+		m_maxChars	   = maxChars;
+		m_textHeight   = textHeight;
+		m_textWidth	   = textWidth;
+		m_padding	   = padding;
+		m_top		   = top;
+		m_left		   = left;
+		m_minX		   = m_left;
+		m_maxX		   = m_minX + m_textWidth*m_displayWidth+m_padding*2;
+		m_minY		   = m_top;
+		m_maxY		   = m_minY + m_textHeight+m_padding*2;
+		m_cTextInput = new CTextInputSystem(m_maxChars, m_displayWidth, false);
+		m_pReadText = m_cTextInput->GetOutput();
+		m_pDisplayText = m_cTextInput->GetCursorString();
+		m_pNoCursor = m_cTextInput->GetDisplayString();
+		m_pReturnedOutput = NULL;
+		m_pReturnedOutput = (char*)malloc(maxChars+1);
+		memset(m_pReturnedOutput,NULL,m_maxChars+1);
+	}
+	catch (...)
+	{
+		m_cLog->lprintf("CTextFeildRenderer error: failed to initialize.");
+		throw;
+	}
+}
+CTextFeildRenderer::~CTextFeildRenderer()
+{
+	try
+	{
+		if (m_pReturnedOutput!=NULL)
+			free(m_pReturnedOutput);
+		if (m_cTextInput)
+			delete m_cTextInput;
+	}
+	catch (...)
+	{
+		m_cLog->lprintf("CTextFeildRenderer error: failed to deconstruct.");
+		throw;
+	}
+}
+const char *CTextFeildRenderer::UpdateAndRender(const char nextCharacter)
+{
+	m_cTextInput->ReadText(nextCharacter);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	bool texturesOn = glIsEnabled(TEXTURE_2D);
+	if (texturesOn)
+		glDisable(TEXTURE_2D);		
+	glPushMatrix();
+		glColor3f(m_backGroundColor[0],m_backGroundColor[1],m_backGroundColor[2]);
+		glBegin(GL_QUADS);
+			glNormal3f(0.0f,0.0f,1.0f);
+			glVertex2i(m_maxX, m_maxY);
+			glVertex2i(m_maxX, m_minY);
+			glVertex2i(m_minX, m_minY);
+			glVertex2i(m_minX, m_maxY);
+		glEnd();
+		glRasterPos2i(m_minX+padding,m_minY+padding);
+		PrintString(m_fontListBase,m_pDisplayText);
+	glPopMatrix();
+	if ('\n'==nextCharacter)
+	{
+		strcpy(m_pReturnedOutput,m_pReadText);
+		m_cTextInput->ResetSystem();
+		return m_pReturnedOutput;
+	}
+	else
+		return NULL;
+}
+void CTextFeildRenderer::MoveTo(int x, int y)
+{
+	m_top		   = x;
+	m_left		   = y;
+	m_minX		   = m_left;
+	m_maxX		   = m_minX + m_textWidth*m_displayWidth+m_padding*2;
+	m_minY		   = m_top;
+	m_maxY		   = m_minY + m_textHeight+m_padding*2;
+}
+
+#endif
+

@@ -1,0 +1,204 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: input - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\BERNAR~1\LOCALS~1\Temp\RSP30D.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/input.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\bistree.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\bitree.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\clist.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\dlist.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\list.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\queue.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\ConstStore.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\onddas.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\bitmap.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\DevILFileFormats.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\loadJPG.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\LoadTGA.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\ButtonRenderer.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\GLGUIWindowGenerator.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\GLGUIWindowManager.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\GLGUIWindowRenderer.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\GUIImageRenderer.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\SelectionListRenderer.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\SliderRenderer.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\TextFeildRenderer.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\Consol.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\InputManager.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\InputSystem.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\StringedInputProcessor.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\TextInputSystem.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\log.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\StringUtilities.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\texture manager.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\ConversationSystem.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\PlayerStateMachine.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\FaceClass.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\TexFaceClass.cpp"
+"C:\Program Files\Microsoft Visual Studio\MyProjects\i2\input\main.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\BERNAR~1\LOCALS~1\Temp\RSP30D.tmp" 
+Creating temporary file "C:\DOCUME~1\BERNAR~1\LOCALS~1\Temp\RSP30E.tmp" with contents
+[
+opengl32.lib glu32.lib dinput8.lib dxguid.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /profile /debug /machine:I386 /out:"Debug/input.exe" 
+".\Debug\bistree.obj"
+".\Debug\bitree.obj"
+".\Debug\clist.obj"
+".\Debug\dlist.obj"
+".\Debug\list.obj"
+".\Debug\queue.obj"
+".\Debug\ConstStore.obj"
+".\Debug\onddas.obj"
+".\Debug\bitmap.obj"
+".\Debug\DevILFileFormats.obj"
+".\Debug\loadJPG.obj"
+".\Debug\LoadTGA.obj"
+".\Debug\ButtonRenderer.obj"
+".\Debug\GLGUIWindowGenerator.obj"
+".\Debug\GLGUIWindowManager.obj"
+".\Debug\GLGUIWindowRenderer.obj"
+".\Debug\GUIImageRenderer.obj"
+".\Debug\SelectionListRenderer.obj"
+".\Debug\SliderRenderer.obj"
+".\Debug\TextFeildRenderer.obj"
+".\Debug\Consol.obj"
+".\Debug\InputManager.obj"
+".\Debug\InputSystem.obj"
+".\Debug\StringedInputProcessor.obj"
+".\Debug\TextInputSystem.obj"
+".\Debug\log.obj"
+".\Debug\StringUtilities.obj"
+".\Debug\texture manager.obj"
+".\Debug\ConversationSystem.obj"
+".\Debug\PlayerStateMachine.obj"
+".\Debug\FaceClass.obj"
+".\Debug\TexFaceClass.obj"
+".\Debug\main.obj"
+"..\..\..\Vc98\Lib\Opengl32.lib"
+"..\..\..\Vc98\Lib\Glu32.lib"
+"..\..\..\Vc98\Lib\Glaux.lib"
+"..\..\..\Vc98\Lib\ijl15.lib"
+"..\..\..\..\..\ImageLib\lib\ilu.lib"
+"..\..\..\..\..\ImageLib\lib\ilut.lib"
+"..\..\..\..\..\ImageLib\lib\il_wrap.lib"
+"..\..\..\..\..\ImageLib\lib\DevIL.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\BERNAR~1\LOCALS~1\Temp\RSP30E.tmp"
+<h3>Output Window</h3>
+Compiling...
+bistree.cpp
+bitree.cpp
+clist.cpp
+dlist.cpp
+list.cpp
+queue.cpp
+ConstStore.cpp
+onddas.cpp
+bitmap.cpp
+DevILFileFormats.cpp
+loadJPG.cpp
+LoadTGA.cpp
+ButtonRenderer.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+GLGUIWindowGenerator.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+GLGUIWindowManager.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+GLGUIWindowRenderer.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+GUIImageRenderer.cpp
+SelectionListRenderer.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+SliderRenderer.cpp
+TextFeildRenderer.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+Consol.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+InputManager.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+InputSystem.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+StringedInputProcessor.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+TextInputSystem.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+log.cpp
+StringUtilities.cpp
+texture manager.cpp
+ConversationSystem.cpp
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(20) : error C2146: syntax error : missing ';' before identifier 'storyBranch'
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(20) : error C2501: 'CONVSYS_STORYBRANCH_t' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(20) : error C2501: 'storyBranch' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(37) : error C2143: syntax error : missing ';' before '*'
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(37) : error C2501: '_CONVSYS_GOAL_t' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(37) : error C2501: 'goals' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(65) : warning C4091: 'typedef ' : ignored on left of 'CONVSYS_STRING_t' when no variable is declared
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(99) : error C2143: syntax error : missing ';' before '*'
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(99) : error C2501: 'CONVSYS_STORYCONDITION_t' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(99) : error C2501: 'conditions' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(113) : error C2143: syntax error : missing ';' before '*'
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(113) : error C2501: 'CONVSYS_REPLY_t' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\myprojects\i2\input\conversationsystemdefines.h(113) : error C2501: 'pReplies' : missing storage-class or type specifiers
+c:\program files\microsoft visual studio\vc98\include\stdio.h(36) : error C2144: syntax error : missing ';' before type 'int'
+c:\program files\microsoft visual studio\vc98\include\stdio.h(36) : fatal error C1004: unexpected end of file found
+PlayerStateMachine.cpp
+FaceClass.cpp
+TexFaceClass.cpp
+main.cpp
+c:\dx90sdk\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+Error executing cl.exe.
+Creating temporary file "C:\DOCUME~1\BERNAR~1\LOCALS~1\Temp\RSP30F.tmp" with contents
+[
+/nologo /o"Debug/input.bsc" 
+".\Debug\bistree.sbr"
+".\Debug\bitree.sbr"
+".\Debug\clist.sbr"
+".\Debug\dlist.sbr"
+".\Debug\list.sbr"
+".\Debug\queue.sbr"
+".\Debug\ConstStore.sbr"
+".\Debug\onddas.sbr"
+".\Debug\bitmap.sbr"
+".\Debug\DevILFileFormats.sbr"
+".\Debug\loadJPG.sbr"
+".\Debug\LoadTGA.sbr"
+".\Debug\ButtonRenderer.sbr"
+".\Debug\GLGUIWindowGenerator.sbr"
+".\Debug\GLGUIWindowManager.sbr"
+".\Debug\GLGUIWindowRenderer.sbr"
+".\Debug\GUIImageRenderer.sbr"
+".\Debug\SelectionListRenderer.sbr"
+".\Debug\SliderRenderer.sbr"
+".\Debug\TextFeildRenderer.sbr"
+".\Debug\Consol.sbr"
+".\Debug\InputManager.sbr"
+".\Debug\InputSystem.sbr"
+".\Debug\StringedInputProcessor.sbr"
+".\Debug\TextInputSystem.sbr"
+".\Debug\log.sbr"
+".\Debug\StringUtilities.sbr"
+".\Debug\texture manager.sbr"
+".\Debug\ConversationSystem.sbr"
+".\Debug\PlayerStateMachine.sbr"
+".\Debug\FaceClass.sbr"
+".\Debug\TexFaceClass.sbr"
+".\Debug\main.sbr"]
+Creating command line "bscmake.exe @C:\DOCUME~1\BERNAR~1\LOCALS~1\Temp\RSP30F.tmp"
+Creating browse info file...
+BSCMAKE: error BK1506 : cannot open file '.\Debug\ConversationSystem.sbr': No such file or directory
+Error executing bscmake.exe.
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+input.exe - 15 error(s), 1 warning(s)
+</pre>
+</body>
+</html>

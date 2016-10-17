@@ -1,0 +1,486 @@
+/*#ifndef __INCLUDED_WINDOWMANAGER__
+#define __INCLUDED_WINDOWMANAGER__
+// CGLGUIWindow *MakeWindow(int x, int y, void *data)
+// bool UpdateWindow(CGLGUIWindow *&window)
+// 
+// To kill window call WinManKillWin(window)
+/*
+void WinManKillWin(CGLGUIWindow *&testWindow)
+{
+	if (testWindow==NULL)
+		return;
+	delete testWindow;
+	testWindow=NULL;
+}*
+
+typedef struct
+{
+	CGLGUIWindow *(*makeWindow)(int x, int y, void *data);
+	bool (*updateWindow)(CGLGUIWindow *&window);*/
+
+
+
+	
+
+				static CLog *pcLogPtr=&g_cLog;
+				static CTextFeildRenderer textBox1(listBase,10,100,6,14,200,200,0,&pcLogPtr);
+
+				static CButtonRenderer guiButton(150,150,100,40,"Click here",60,16,
+					"Rock","Chess","Shell", listBase, &g_cLog, &allTextures);
+					/*
+								 int top, int left, int width, int height, const char *buttonText,
+								 int buttonTextHeightPx, int buttonTextWidthPx,
+								 char *defaultTexName, char *mouseOverTexName,
+								 char *mouseDownTexName, unsigned int fontListBase, CLog *cLog,
+								 CTextureManager *cTexMan*/
+
+				static CSelectionListRenderer cSelectList(listBase, 20,
+											   3,
+											   17, 13,
+											   220, 20,2,//theFileList,
+											   /**/
+											   "WWWWWWWWWWWWWWWWWWWW\n"
+											   "Exit\n"
+											   "say Hi\n"
+											   "say What?\n"
+											   "Ok\n"
+											   "Dang\n"
+											   "1\n"
+											   "2\n"
+											   "3\n"
+											   "RedrawScreen",/**/
+											   &pcLogPtr);
+
+				int cX = (int)(buttonStatus[cursorX].buttonValue*(width-1)),
+					cY = (int)(-buttonStatus[cursorY].buttonValue*(height-1))+(height-1);
+				textBox1.MoveTo(cX,cY);
+				/*if (buttonStatus[mouseB].buttonValue==1.0f)
+					int doNothing=0;*/
+				guiButton.UpdateAndRender(cX,cY,false,(buttonStatus[mouseB].buttonValue==1.0f));
+				//guiButton.MoveTo(cX,cY);
+				if (INPUTMAN_TEXT_CODE_SCROLLLOCK==current)
+				{
+					static int pX, p1Y, p2Y;
+					const int h1=5, h2 = 1;
+					static bool firstTime=true;
+					if (firstTime)
+					{
+						firstTime=false;
+						int n, y1;
+						cSelectList.ChangeDisplayHeight(h1);
+						cSelectList.GetCoordinates(pX,p1Y,n,y1);
+						y1=(p1Y-y1);
+						
+						int  y2;
+						cSelectList.ChangeDisplayHeight(h2);
+						cSelectList.GetCoordinates(n,y2,n,n);
+
+						p2Y=p1Y+(p1Y-y2);
+						p2Y-=y1;
+						p1Y-=y1;
+					}
+					if (cSelectList.GetDisplayHeight()<h1)
+					{
+						cSelectList.ChangeDisplayHeight(h1);
+						cSelectList.MoveTo(pX,p1Y);
+					}
+					else
+					{
+						cSelectList.ChangeDisplayHeight(h2);
+
+						cSelectList.MoveTo(pX,p2Y);
+
+						cCommandConsol.SetTextString("RedrawScreen");
+						cCommandConsol.SendThru();
+					}
+				}
+				else if ('\\'==current)
+				{
+					//cSelectList.UpdateAndRender(SELECTIONLISTHOMECOMMAND);
+					cSelectList.ChangeString("Exit\nRedrawScreen\nsay Hi");
+				}
+				else if ('/'==current)
+				{
+					//cSelectList.UpdateAndRender(SELECTIONLISTHOMECOMMAND);
+					cSelectList.ChangeString("1\n2\n3\n4\n5\n6");
+				}
+				else if ('*'==current)
+				{
+					//cSelectList.UpdateAndRender(SELECTIONLISTHOMECOMMAND);
+					cSelectList.ChangeString("Exit\n"
+											   "say Hi\n"
+											   "say What?\n"
+											   "Ok\n"
+											   "Dang");
+				}
+				else if (INPUTMAN_TEXT_CODE_F5==current)
+					int doNothing=1;
+				/**/
+				char lbuffer[200]={0};
+				sprintf(lbuffer,"Cursor x %3d y%3d\n"
+											   "Exit\n"
+											   "say Hi\n"
+											   "say Wha\n"
+											   "Ok\n"
+											   "Dang\n"
+											   "1\n"
+											   "2\n"
+											   "3\n"
+											   "RedrawScreen",cX,cY);
+				cSelectList.ChangeString(lbuffer);/**/
+				const char *enteredText = textBox1.UpdateAndRender(current);
+				if (enteredText!=NULL)
+				{
+					if (strcmp("ColorRed",enteredText)==NULL)
+					{
+						textBox1.SetColor(1.0f,0.0f,0.0f, 1.0f,1.0f,0.0f);
+						cSelectList.SetColor(0.5f,0.0f,0.0f, 0.5f,0.5f,0.0f);
+						cSelectList.SetHighlightColor(1.0f,0.0f,0.0f, 1.0f,1.0f,0.0f);
+						guiButton.ChangeTextColor(1.0f,0.0f,0.0f);
+						guiButton.MoveTo(300,300);
+					}
+					else if (strcmp("ColorWhite",enteredText)==NULL)
+					{
+						textBox1.SetColor(1.0f,1.0f,1.0f, 0.0f,0.0f,0.0f);
+						guiButton.ChangeTextColor(1.0f,1.0f,1.0f);
+						cSelectList.SetColor(1.0f,1.0f,1.0f, 0.0f,0.0f,0.0f);
+						cSelectList.SetHighlightColor(0.5f,0.5f,0.5f, 1.0f,1.0f,1.0f);
+						guiButton.MoveTo(150,150);
+					}					
+					else if (strcmp("ColorBlack",enteredText)==NULL)
+					{
+						textBox1.SetColor(0.0f,0.0f,0.0f, 1.0f,1.0f,1.0f);
+					}
+					else if (strcmp("ColorBlue",enteredText)==NULL)
+					{
+						textBox1.SetColor(0.0f,0.0f,0.25f, 0.0f,0.0f,1.0f);
+					}
+					else if (strcmp("ColorGreen",enteredText)==NULL)
+					{
+						textBox1.SetColor(0.0f,0.25f,0.0f, 0.0f,1.0f,0.0f);
+					}
+					else if (strcmp("GetCoordinates",enteredText)==NULL)
+					{
+						char buffer[100];
+						int top,left,bottom,right;
+						textBox1.GetCoordinates(left,top,right,bottom);
+						sprintf(buffer,"%1.3d %-1.3d - %i %i",top,left,bottom,right);
+						textBox1.SetTextString(buffer);
+					}					
+				}
+
+				const char *receivedText = cSelectList.UpdateAndRender(current);
+				if (receivedText!=NULL)
+				{
+					//cCommandConsol.EchoMessage(receivedText,false);
+					cCommandConsol.SetTextString(receivedText);
+					cCommandConsol.SendThru();
+				}
+
+				if (current==INPUTMAN_TEXT_CODE_F9)
+					cSelectList.ScrollDown();
+				else if (current==INPUTMAN_TEXT_CODE_F10)
+					cSelectList.ScrollDown(3);
+				else if (current==INPUTMAN_TEXT_CODE_F8)
+					cSelectList.ScrollUp(3);
+				else if (current==INPUTMAN_TEXT_CODE_F7)
+					cSelectList.ScrollUp();
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////
+						GLGUICreateTextFeild(&windowDescription[0],"first feild",listBase,13,12, 10,10,
+							20,100,0,"Hello World.",true,true, 0.0f,0.0f,0.0f, 1.0f,0.0f,1.0f);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[0]);
+						GLGUICreateSelectionList(&windowDescription[1],"list",listBase,13,13, left,top+10,
+							20,5,-1,2,0,true,true,true,0.5f,0.0f,0.0f, 1.0f,0.0f,0.0f, 0.5f,0.5f,0.0f,
+							1.0f,1.0f,0.0f,theFileList);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[1]);
+						GLGUICreateButton(&windowDescription[2],"button",listBase,30,12, left,top+10,false,
+							128,32,"Click", "GUIButtonUp","GUIButtonGlow","GUIButtonDown",true,1.0f,0.0f,0.0f);						
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[2]);
+						GLGUICreateDropDownList(&windowDescription[3],"Menu",listBase,13,13, left,top+100,
+							20,1, 5, 2,-1,-1, 1,true,true,true, 0.0f,0.25f,0.0f, 0.0f,0.5f,0.0f,
+							0.0f,0.5f,0.0f, 0.0f,1.0f,0.0f, theJPGFileList);						
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[3]);
+						GLGUICreateToggleButton(&windowDescription[4],"Box",listBase,0,0, right, top-7,
+							8,8, NULL, "GUIUnchecked","GUIChecked", false,0.0f,0.0f,0.0f, false);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[3]);
+						GLGUICreateTextDisplay(&windowDescription[5],"TextDisp",listBase, 13,13, left, bottom-50,
+							true, 0.0f,0.25f,0.25f, "This is just a test message being written\nTest the message"
+							" that has a longer second line.\nAnd a shorter first line.");
+/////////////////////////////////////////////////////
+
+
+
+
+
+
+m_input (Direct Input Wrapper with members ...)
+
+bool Initialize(HWND hwnd,HINSTANCE appInstance,bool isExclusive, DWORD flags);
+// DWORD flags contains options for activating devices
+// ie IS_USEKEYBOARD | IS_USEMOUSE currently activates
+// usage of the keyboard and mouse
+// bool isExclusive is use to communicate the usage
+// of the mouse to the mouse Direct Input wrapper
+
+Shutdown() // shuts down input system
+
+bool KeyDown(char) // NOTE: KeyDown(unsinged char) would be
+// more reliable since the conversion is necessary
+// anyway to get all keys
+// after receiving a Direct Input constant (or any constant)
+// returns true if the requested button is down
+// else returns false.
+
+bool ButtonDown(int) // does the same as KeyDown
+// expect for mouse buttons
+
+void GetMouseMovement(int &x, int &y) // gets the
+// x and y travel since the last call
+
+int GetMouseWheelMovement() // does the same
+// as GetMouseMovement except for the mouse wheel
+
+Update() // updates the input wrapper (called once
+// every cycle through input system)
+
+
+
+
+
+
+
+
+
+						/*/*
+						char *files[]={"rumors.jpg","downButton.jpg","buttonUp.jpg","buttonDown.jpg","buttonGlow.jpg","checkboxChecked.jpg","checkboxUnchecked.jpg",
+							"gui\\openDef.jpg","gui\\openMOver.jpg","gui\\openMDown.jpg",
+							"gui\\scrollUpDef.jpg","gui\\scrollUpMOver.jpg","gui\\scrollUpMDown.jpg",
+							"gui\\scrollDownDef.jpg","gui\\scrollDownMOver.jpg","gui\\scrollDownMDown.jpg"
+						};
+						char *names[]={"backTile","DownButton","GUIButtonUp","GUIButtonDown","GUIButtonGlow","GUIChecked","GUIUnchecked",
+							"GUIOpenButtonDef","GUIOpenButtonMOver","GUIOpenButtonMDown",
+							"GUIScrollUpButtonDef","GUIScrollUpButtonMOver","GUIScrollUpButtonMDown",
+							"GUIScrollDownButtonDef","GUIScrollDownButtonMOver","GUIScrollDownButtonMDown"
+						};
+						allTextures.AddTextures(TEXMAN_JPG,16,files,names); /// NOT SPECIFYING FTYPE CORRECTLY CAN CAUSE POTENTIAL ERROR */
+
+
+
+
+
+
+
+
+
+/////////////////////////////////
+					static bool firstTime = true;
+					if (firstTime)
+					{
+						firstTime=false;
+						allTextures.AddTextures(
+							"(window.jpg,				backTile),"
+							"(downButton.jpg,			DownButton),"
+							"(buttonUp.jpg,				GUIButtonUp),"
+							"(buttonDown.jpg,			GUIButtonDown),"
+							"(buttonGlow.jpg,			GUIButtonGlow),"
+							"(checkboxChecked.jpg,		GUIChecked),"
+							"(checkboxUnchecked.jpg,	GUIUnchecked),"
+							"(gui\\openDef.jpg,			GUIOpenButtonDef),"
+							"(gui\\openMOver.jpg,		GUIOpenButtonMOver),"
+							"(gui\\openMDown.jpg,		GUIOpenButtonMDown),"
+							"(gui\\scrollUpDef.jpg,		GUIScrollUpButtonDef),"
+							"(gui\\scrollUpMOver.jpg,	GUIScrollUpButtonMOver),"
+							"(gui\\scrollUpMDown.jpg,	GUIScrollUpButtonMDown),"
+							"(gui\\scrollDownDef.jpg,	GUIScrollDownButtonDef),"
+							"(gui\\scrollDownMOver.jpg,	GUIScrollDownButtonMOver),"
+							"(gui\\scrollDownMDown.jpg,	GUIScrollDownButtonMDown),"
+							"(gui\\sliderHorizontal.jpg,GUIHorizontalSlider),"
+							"(gui\\sliderVertical.jpg,	GUIVerticalSlider),"
+							"(gui\\slider.jpg,			GUISliderButton)");
+						allTextures.AddTextures("(pointer.png,Arrow)");
+					}
+					const int nWinElmts=14, WinWidth=320, WinHeight=245, WinX=200, WinY=180, WinBackTileFactor=1,
+						WinTextWidth=13, WinTextHeight=13;
+					glguiElementData_t windowDescription[nWinElmts];
+					static bool bHereB4=false;
+					if (!bHereB4)
+					{
+						int left,top,right,bottom;
+						GLGUICreateButton(&windowDescription[0],"OkButton",listBase,
+							GLGUITextDispWidthEstCalculator("Press Here",WinTextWidth) //((WinTextWidth*692)/1000)*9
+							,WinTextHeight,
+							WinWidth/2-(128/2),10,true, 128,32,"Press Here","GUIButtonUp","GUIButtonGlow","GUIButtonDown",
+							true, 1.0f,1.0f,0.0f);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[0]);
+						GLGUICreateTextFeild(&windowDescription[1],"FileNameTxtFld",listBase,WinTextWidth,WinTextHeight,
+							18,top+5, 20,100,0,"*.bmp, *.jpg",true,true, 0.0f,0.25f,0.0f, 0.0f,1.0f,0.0f);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[1]);
+						GLGUICreateSelectionList(&windowDescription[2],"JPGFileList",listBase,WinTextWidth,WinTextHeight,
+							left,top+5, 20,5, 3,4,13, 0, true,true,true, 0.0f,0.25f,0.0f, 0.0f,0.5f,0.0f, 0.0f,0.6f,0.0f,
+							0.0f,1.0f,0.0f,theJPGFileList,true);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[2]);
+						GLGUICreateButton(&windowDescription[3],"JPGFileListScrollUp",listBase,WinTextWidth,WinTextHeight,
+							right,top-7, false, 8,8, NULL, "GUIScrollUpButtonDef","GUIScrollUpButtonMOver","GUIScrollUpButtonMDown",
+							false, 0.0f,0.0f,0.0f);
+						GLGUICreateButton(&windowDescription[4],"JPGFileListScrollDown",listBase,WinTextWidth,WinTextHeight,
+							right,bottom, false, 8,8, NULL, "GUIScrollDownButtonDef","GUIScrollDownButtonMOver","GUIScrollDownButtonMDown",
+							false, 0.0f,0.0f,0.0f);
+						GLGUICreateDropDownList(&windowDescription[5],"BMPFileList",listBase,WinTextWidth,WinTextHeight,
+							left-1, top+5, 20,1,10, 6,7,8, 1, true,true,true, 0.0f,0.0f,0.0f, 0.5f,0.5f,0.5f,
+							0.15f,0.15f,0.15f, 1.0f,1.0f,1.0f, theFileList,true);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[5]);
+						GLGUICreateButton(&windowDescription[6],"BMPFileListOpen",listBase,WinTextWidth,WinTextHeight,
+							right,top-15, false, 16,16, NULL, "GUIOpenButtonDef","GUIOpenButtonMOver","GUIOpenButtonMDown",
+							false, 0.0f,0.0f,0.0f);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[6]);
+						GLGUICreateButton(&windowDescription[7],"BMPFileListScrollUp",listBase,WinTextWidth,WinTextHeight,
+							right,top-7,false, 8,8, NULL, "GUIScrollUpButtonDef","GUIScrollUpButtonMOver","GUIScrollUpButtonMDown",
+							false, 0.0f,0.0f,0.0f);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[7]);
+						GLGUICreateButton(&windowDescription[8],"BMPFileListScrollDown",listBase,WinTextWidth,WinTextHeight,
+							left, bottom-8, false, 8,8, NULL, "GUIScrollDownButtonDef","GUIScrollDownButtonMOver","GUIScrollDownButtonMDown",
+							false, 0.0f,0.0f,0.0f);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[5]);
+						GLGUICreateTextDisplay(&windowDescription[9],"Text Message",listBase,WinTextWidth,WinTextHeight,
+							left+1, top+5, true, 0.0f,0.0f,0.0f,"Test Window.\n \nTest of scroll buttons, drop down menus,\nand text feilds.\n                                  ");
+						GLGUICreateToggleButton(&windowDescription[10],"Box",listBase,0,0, WinWidth-8, WinHeight-8,
+							8,8, NULL, "GUIUnchecked","GUIChecked", false,0.0f,0.0f,0.0f, false);
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[9]);
+						GLGUICreateToggleButton(&windowDescription[11],"Box2",listBase,0,0, left, top+5,
+							8,8, NULL, "GUIUnchecked","GUIChecked", false,0.0f,0.0f,0.0f, true);
+						GLGUICreateSlider(&windowDescription[12],"ValueBar",listBase,WinTextWidth,WinTextHeight,
+							left+10,top+5,200,8,0,true,"GUIHorizontalSlider","GUISliderButton");
+						GLGUICoordinateCalculator(left,top,right,bottom,&windowDescription[2]);
+						GLGUICreateSlider(&windowDescription[13],"JPGFileListSlider",listBase,WinTextWidth,WinTextHeight,
+							right,bottom+8,8,top-bottom-8*2,SLIDERRENDERER_MAXVALUE,false,"GUIVerticalSlider","GUISliderButton");
+						bHereB4=true;
+					}
+
+					static CGLGUIWindow testWindow(&g_cLog,&allTextures,WinX,WinY, WinWidth,WinHeight,
+						"backTile",WinBackTileFactor,windowDescription,nWinElmts,1);
+
+					int cX = (int)(buttonStatus[cursorX].buttonValue*(width-1)),
+						cY = (int)(-buttonStatus[cursorY].buttonValue*(height-2))+(height-1);
+					if (testWindow.UpdateAndRender(current,cX,cY,(buttonStatus[mouseB].buttonValue==1.0f),sysTimers[3].GetElapsedSeconds(),testWindow.IsMouseOver(cX,cY)))
+					{
+						static l1Index=testWindow.FindElement("JPGFileList"),
+							   l2Index=testWindow.FindElement("BMPFileList"),
+							   sbIndex=testWindow.FindElement("OkButton"),
+							   fnIndex=testWindow.FindElement("FileNameTxtFld");
+						int pressed = testWindow.GetPressedButton();
+						if (pressed==l1Index)
+							testWindow.ChangeElmtData(fnIndex,testWindow.GetReturnedString(l1Index));
+						else if (pressed==l2Index)
+							testWindow.ChangeElmtData(fnIndex,testWindow.GetReturnedString(l2Index));
+					}
+
+					{
+						static oldCX=-99999, oldCY=-99999;
+						static checkBoxIndex=testWindow.FindElement("Box2");
+						//static bool dispOn=true;
+						//if (current==INPUTMAN_TEXT_CODE_F6)
+						//	dispOn=(!dispOn);
+						if (((oldCX!=cX)||(oldCY!=cY))&&testWindow.GetElementStatus(checkBoxIndex))
+						{
+							char buffer[200]={0};
+							static int sliderIndex = testWindow.FindElement("ValueBar");
+							int sP = testWindow.GetElementStatus(sliderIndex);
+							if (current=='~')
+								testWindow.ChangeElmtData(sliderIndex,SLIDERRENDERER_MAXVALUE/2);
+							sprintf(buffer,"Test Window.\nSlider %i\nTest of scroll buttons, drop down menus,\nand text feilds.\nCursorX:%0.3i CursorY:%0.3i",sP,cX,cY);
+							//sprintf(buffer,"Active: %3.3f Inactive: %3.3f\nCursorX:%0.3i CursorY:%0.3i",buttonStatus[cursorX].secondsHeld,buttonStatus[cursorX].secondsInactive,cX,cY);
+							//sprintf(buffer,"AaBbCcDdEeFfGg\nHhIiJjKkLlMmNnOoPpQqRrSs\nTtUuVvWwXxYy\nZz1234567890!@#$%^&*()-_.\nCursorX:%0.3i CursorY:%0.3i",cX,cY);
+							static winIndex=testWindow.FindElement("Text Message");
+							testWindow.ChangeElmtData(winIndex,buffer);
+						}
+						oldCX=cX;
+						oldCY=cY;
+					}
+					/*	if (testWindow.GetPressedButton()>=0)
+						{
+							cCommandConsol.SetTextString(testWindow.GetReturnedString(testWindow.FindElement("first feild")));
+							cCommandConsol.SendThru();
+						}
+						else
+						{
+							cCommandConsol.SetTextString(testWindow.GetReturnedString(testWindow.FindElement("list")));
+							cCommandConsol.SendThru();
+						}*/
+					{
+						static checkBoxIndex=testWindow.FindElement("Box");
+						static int elmtX=0, elmtY=0, history=0;
+						if (history==0)
+						{
+							history++;
+							testWindow.GetButtonCenter(checkBoxIndex,elmtX,elmtY);
+						}
+						if (testWindow.GetElementStatus(checkBoxIndex))
+							testWindow.MoveTo(cX-elmtX,cY-elmtY);
+					}
+						/*{
+							/*cCommandConsol.SetTextString("RedrawScreen");
+							cCommandConsol.SendThru();*
+						}
+							/*cCommandConsol.SetTextString(receivedText);
+					cCommandConsol.SendThru();*/
+
+
+
+
+
+
+
+
+
+
+
+
+		if (g_in3DMode)
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear color/depth buffer
+		glLoadIdentity();
+	}
+	else
+	{
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_DEPTH_TEST);
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+
+		gluPerspective(54.0f,(GLfloat)width/(GLfloat)height,1.0f,1000.0f);
+
+		glMatrixMode(GL_MODELVIEW);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear color/depth buffer
+		glLoadIdentity();
+	}
+	g_inputMan.Update();
+	{
+		glFlush();
+		SwapBuffers(g_HDC);
+	}
+	if (!g_in3DMode)
+	{
+		glMatrixMode(GL_PROJECTION);
+		glClear(GL_DEPTH_BUFFER_BIT || GL_COLOR_BUFFER_BIT);
+		glLoadIdentity();
+		glDisable(GL_DEPTH_TEST);
+
+		// set the perspective with the appropriate aspect ratio
+		gluOrtho2D(0, width, 0, height);
+
+
+		// select modelview matrix
+		glMatrixMode(GL_MODELVIEW);
+	}
